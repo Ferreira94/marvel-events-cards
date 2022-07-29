@@ -13,6 +13,8 @@ export const defaultTheme = {
 
   "red-500": "#EC1D24",
 
+  "yellow-500": "#faba32",
+
   desktop: `(max-width: 1360px)`,
   desktopM: `(max-width: 1140px)`,
   laptop: `(max-width: 740px)`,
