@@ -1,10 +1,30 @@
+import { SignOut, UserCircle } from "phosphor-react";
+import { useNavigate } from "react-router-dom";
 import { Logo } from "../Logo";
-import { HeaderContainer } from "./style";
+import { HeaderContainer, UserContainer } from "./style";
 
-export function Header() {
+interface IHeaderProps {
+  name?: string;
+}
+
+export function Header({ name }: IHeaderProps) {
+  const navigate = useNavigate();
+
   return (
     <HeaderContainer>
-      <Logo />
+      <div>
+        <Logo />
+        {name && (
+          <UserContainer>
+            <UserCircle size={32} />
+            <strong>{name}</strong>
+            <div>
+              <SignOut />
+              <span onClick={() => navigate("/")}>sair</span>
+            </div>
+          </UserContainer>
+        )}
+      </div>
     </HeaderContainer>
   );
 }

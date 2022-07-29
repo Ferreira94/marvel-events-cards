@@ -5,16 +5,16 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin-top: -6rem;
+  margin-top: -10rem;
   gap: 1rem;
 `;
 
 export const ButtonsContainer = styled.div`
   display: flex;
-  gap: 1rem;
+  gap: 0.5rem;
 
   button {
-    width: 10rem;
+    width: 9rem;
     height: 2.25rem;
     border: 0;
     border-radius: 0.5rem;
@@ -30,6 +30,11 @@ export const ButtonsContainer = styled.div`
 
     &:disabled {
       background-color: ${(props) => props.theme["gray-500"]};
+      cursor: not-allowed;
+
+      &:hover {
+        opacity: 1;
+      }
     }
   }
 `;

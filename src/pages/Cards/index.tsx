@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Card } from "../../components";
+import { number } from "zod";
+import { Card, Header } from "../../components";
 
 import { api, hash, public_key, timestamp } from "../../services/api";
-import { randomPoints } from "../../utils";
 import { IConfirmFormData } from "../Home";
 import { Container, CardsContainer, ButtonsContainer } from "./style";
 
@@ -18,6 +18,9 @@ export interface IResultProps {
   thumbnail: {
     path: string;
     extension: string;
+  };
+  stories: {
+    available: number;
   };
 }
 
@@ -66,7 +69,6 @@ export function Cards() {
     }
 
     setCountCards(countCards + 1);
-    console.log(randomNumbers);
   }
 
   useEffect(() => {
@@ -85,36 +87,47 @@ export function Cards() {
     return;
   }, [isLoading, countCards]);
 
+  console.log(events);
+
   return (
-    <Container>
-      {!isLoading && (
-        <ButtonsContainer>
-          <button
-            onClick={randomNumber}
-            disabled={countCards === 8 ? true : false}
-          >
-            Puxar carta
-          </button>
-          <button onClick={sortNumbers}>Embaralhar</button>
-        </ButtonsContainer>
-      )}
-      <CardsContainer>
-        {!isLoading ? (
-          <>
-            {selectedEvents.map((item, index) => (
-              <Card
-                key={item.id}
-                title={item.title}
-                description={item.description}
-                thumbnail={item.thumbnail.path + `.` + item.thumbnail.extension}
-                points={randomPoints[index]}
-              />
-            ))}
-          </>
-        ) : (
-          <h2>Carregando...</h2>
+    <>
+      <Header name={state.name} />
+      <Container>
+        {!isLoading && (
+          <ButtonsContainer>
+            <button
+              onClick={countCards < 8 ? randomNumber : () => {}}
+              disabled={countCards === 8 ? true : false}
+            >
+              Puxar carta
+            </button>
+            <button onClick={sortNumbers}>Embaralhar</button>
+          </ButtonsContainer>
         )}
-      </CardsContainer>
-    </Container>
+        <CardsContainer>
+          {!isLoading ? (
+            <>
+              {selectedEvents.map((item) => (
+                <Card
+                  key={item.id}
+                  title={item.title}
+                  description={item.description}
+                  thumbnail={
+                    item.thumbnail.path + `.` + item.thumbnail.extension
+                  }
+                  points={
+                    Math.floor(item.stories.available / 10) < 10
+                      ? Math.floor(item.stories.available / 10)
+                      : 10
+                  }
+                />
+              ))}
+            </>
+          ) : (
+            <h2>Carregando...</h2>
+          )}
+        </CardsContainer>
+      </Container>
+    </>
   );
 }

@@ -3,7 +3,7 @@ import * as zod from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FormProvider, useFormContext } from "react-hook-form";
 
-import { Form } from "../../components";
+import { Form, Header } from "../../components";
 import { HomeContainer } from "./style";
 
 export type IConfirmFormData = zod.infer<typeof confirmFormValidationSchema>;
@@ -29,10 +29,13 @@ export function Home() {
   }
 
   return (
-    <HomeContainer onSubmit={handleSubmit(handleConfirm)}>
-      <FormProvider {...confirmForm}>
-        <Form />
-      </FormProvider>
-    </HomeContainer>
+    <>
+      <Header />
+      <HomeContainer onSubmit={handleSubmit(handleConfirm)}>
+        <FormProvider {...confirmForm}>
+          <Form />
+        </FormProvider>
+      </HomeContainer>
+    </>
   );
 }
