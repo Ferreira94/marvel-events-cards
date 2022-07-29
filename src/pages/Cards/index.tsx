@@ -22,11 +22,12 @@ export interface IResultProps {
 
 export function Cards() {
   const [events, setEvents] = useState<IResultProps[]>([]);
+  const [randomNumbers, setRandomNumbers] = useState<number[]>([]);
+  const [selectedEvents, setSelectedEvents] = useState<IResultProps[]>([]);
+  const [countCards, setCountCards] = useState(0);
   const isLoading = events.length === 0 ? true : false;
   const { state } = useLocation() as unknown as IUserProps;
   const navigate = useNavigate();
-
-  console.log(state.name);
 
   if (!state.name) {
     navigate("/");
@@ -34,24 +35,47 @@ export function Cards() {
 
   useEffect(() => {
     api
-      .get(`/events?ts=${timestamp}&apikey=${public_key}&hash=${hash}`)
+      .get(`/events?ts=${timestamp}&apikey=${public_key}&hash=${hash}&limit=74`)
       .then((response) => setEvents(response.data.data.results))
       .catch((err) => console.log(err));
   }, []);
 
-  console.log(events.length);
+  function sortNumbers() {
+    setRandomNumbers([...randomNumbers, Math.floor(Math.random() * 74)]);
+
+    setCountCards(countCards + 1);
+  }
+
+  useEffect(() => {
+    if (countCards < 5) {
+      sortNumbers();
+
+      return;
+    }
+
+    if (!isLoading) {
+      console.log(randomNumbers);
+      {
+        randomNumbers.map((item) =>
+          setSelectedEvents((state) => [...state, events[item]])
+        );
+      }
+    }
+
+    return;
+  }, [isLoading, countCards]);
 
   return (
     <CardsContainer>
       {!isLoading ? (
         <>
-          {events.map((item) => (
+          {selectedEvents.map((item) => (
             <Card
               id={item.id}
               title={item.title}
               description={item.description}
               thumbnail={item.thumbnail.path + `.` + item.thumbnail.extension}
-              points={9}
+              points={Math.floor(Math.random() * 11)}
             />
           ))}
         </>
