@@ -1,22 +1,15 @@
 import { CardContainer } from "./style";
 
 export interface ICardProps {
-  id: number;
   title: string;
   description: string;
   thumbnail: string;
   points: number;
 }
 
-export function Card({
-  id,
-  title,
-  description,
-  thumbnail,
-  points,
-}: ICardProps) {
+export function Card({ title, description, thumbnail, points }: ICardProps) {
   return (
-    <CardContainer key={id}>
+    <CardContainer>
       <div>
         <span>{points}</span>
       </div>

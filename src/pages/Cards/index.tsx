@@ -3,8 +3,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Card } from "../../components";
 
 import { api, hash, public_key, timestamp } from "../../services/api";
+import { randomPoints } from "../../utils";
 import { IConfirmFormData } from "../Home";
-import { CardsContainer } from "./style";
+import { Container, CardsContainer, ButtonsContainer } from "./style";
 
 interface IUserProps {
   state: IConfirmFormData;
@@ -41,47 +42,79 @@ export function Cards() {
   }, []);
 
   function sortNumbers() {
+    for (let i = randomNumbers.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [randomNumbers[i], randomNumbers[j]] = [
+        randomNumbers[j],
+        randomNumbers[i],
+      ];
+    }
+
+    setSelectedEvents([]);
+    randomNumbers.map((item) =>
+      setSelectedEvents((state) => [...state, events[item]])
+    );
+  }
+
+  function randomNumber() {
     setRandomNumbers([...randomNumbers, Math.floor(Math.random() * 74)]);
 
+    if (countCards >= 5) {
+      const random = Math.floor(Math.random() * 74);
+
+      setSelectedEvents((state) => [...state, events[random]]);
+    }
+
     setCountCards(countCards + 1);
+    console.log(randomNumbers);
   }
 
   useEffect(() => {
     if (countCards < 5) {
-      sortNumbers();
+      randomNumber();
 
       return;
     }
 
-    if (!isLoading) {
-      console.log(randomNumbers);
-      {
-        randomNumbers.map((item) =>
-          setSelectedEvents((state) => [...state, events[item]])
-        );
-      }
+    if (!isLoading && countCards <= 5) {
+      randomNumbers.map((item) =>
+        setSelectedEvents((state) => [...state, events[item]])
+      );
     }
 
     return;
   }, [isLoading, countCards]);
 
   return (
-    <CardsContainer>
-      {!isLoading ? (
-        <>
-          {selectedEvents.map((item) => (
-            <Card
-              id={item.id}
-              title={item.title}
-              description={item.description}
-              thumbnail={item.thumbnail.path + `.` + item.thumbnail.extension}
-              points={Math.floor(Math.random() * 11)}
-            />
-          ))}
-        </>
-      ) : (
-        <h2>Carregando...</h2>
+    <Container>
+      {!isLoading && (
+        <ButtonsContainer>
+          <button
+            onClick={randomNumber}
+            disabled={countCards === 8 ? true : false}
+          >
+            Puxar carta
+          </button>
+          <button onClick={sortNumbers}>Embaralhar</button>
+        </ButtonsContainer>
       )}
-    </CardsContainer>
+      <CardsContainer>
+        {!isLoading ? (
+          <>
+            {selectedEvents.map((item, index) => (
+              <Card
+                key={item.id}
+                title={item.title}
+                description={item.description}
+                thumbnail={item.thumbnail.path + `.` + item.thumbnail.extension}
+                points={randomPoints[index]}
+              />
+            ))}
+          </>
+        ) : (
+          <h2>Carregando...</h2>
+        )}
+      </CardsContainer>
+    </Container>
   );
 }
