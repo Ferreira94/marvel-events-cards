@@ -10,7 +10,7 @@
   <img alt="License" src="https://img.shields.io/badge/license-MIT-E3E627">
 </p>
 
-> O projeto consiste em uma aplicação onde foi utilizado a API da Marvel para criar cards onde são mostrados o título, imagem e descrição de eventos criados pela Editora. Em primeiro momento irá mostrar 5 cards aleatórios, onde o usuário terá a opção de puxar mais 1 card, no máximo o usuário poderá puxar mais 3 cards totalizando 8, o usuário também poderá embaralhar os cards o que irá mudar a ordem dos cards que estão sendo exibidos.
+> O projeto consiste em uma aplicação onde foi utilizado a API da Marvel para criar cards onde são mostrados o título, imagem e descrição de eventos criados pela Editora. Em primeiro momento irá mostrar 5 cards aleatórios, onde o usuário terá a opção de puxar mais 1 card, no máximo o usuário poderá puxar 3 cards totalizando 8, o usuário também poderá embaralhar os cards o que irá mudar a ordem dos cards que estão sendo exibidos.
 
 ## Fotos
 
@@ -29,7 +29,7 @@ Este projeto foi feito utilizando as seguintes tecnologias:
 - [Styled Components](https://styled-components.com/)
 - [React Hook Form](https://react-hook-form.com/)
 - [Zod](https://github.com/colinhacks/zod)
-- [axios](https://axios-http.com/ptbr/docs/intro)
+- [Axios](https://axios-http.com/ptbr/docs/intro)
 
 ## 🛠️ Como executar o projeto
 
@@ -42,11 +42,20 @@ $ git clone https://github.com/Ferreira94/marvel-events-cards.git
 
 ```bash
 # Entre na pasta do projeto e baixe as dependendências
+$ npm install
+
+ou
+
 $ yarn install
+
 ```
 
 ```bash
 # Execute o projeto
+$ npm run dev
+
+ou
+
 $ yarn dev
 ```
 

@@ -1,6 +1,5 @@
 import { SignOut, UserCircle } from "phosphor-react";
 import { useNavigate } from "react-router-dom";
-import { Logo } from "../Logo";
 import { HeaderContainer, UserContainer } from "./style";
 
 interface IHeaderProps {
