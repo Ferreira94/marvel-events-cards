@@ -92,8 +92,6 @@ export function Cards() {
     return;
   }, [isLoading, countCards]);
 
-  console.log(events);
-
   return (
     <>
       <Header name={state.name} />

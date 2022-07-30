@@ -13,7 +13,7 @@ export function Header({ name }: IHeaderProps) {
   return (
     <HeaderContainer>
       <div>
-        <Logo />
+        <img src="/assets/logo.svg" />
         {name && (
           <UserContainer>
             <UserCircle size={32} />

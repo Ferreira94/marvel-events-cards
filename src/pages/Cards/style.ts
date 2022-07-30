@@ -46,4 +46,9 @@ export const CardsContainer = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   gap: 1rem;
+  padding: 0 0.5rem;
+
+  h2 {
+    color: ${(props) => props.theme["gray-100"]};
+  }
 `;
