@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import * as zod from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, FormProvider, useFormContext } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 
 import { Form, Header } from "../../components";
 import { HomeContainer } from "./style";

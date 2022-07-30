@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { number } from "zod";
 import { Card, Header } from "../../components";
 
 import { api, hash, public_key, timestamp } from "../../services/api";
@@ -38,10 +37,16 @@ export function Cards() {
   }
 
   useEffect(() => {
-    api
-      .get(`/events?ts=${timestamp}&apikey=${public_key}&hash=${hash}&limit=74`)
-      .then((response) => setEvents(response.data.data.results))
-      .catch((err) => console.log(err));
+    async function loadApi() {
+      await api
+        .get(
+          `/events?ts=${timestamp}&apikey=${public_key}&hash=${hash}&limit=74`
+        )
+        .then((response) => setEvents(response.data.data.results))
+        .catch((err) => console.log(err));
+    }
+
+    loadApi();
   }, []);
 
   function sortNumbers() {

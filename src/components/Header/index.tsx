@@ -20,7 +20,7 @@ export function Header({ name }: IHeaderProps) {
             <strong>{name}</strong>
             <div>
               <SignOut />
-              <span onClick={() => navigate("/")}>sair</span>
+              <span onClick={() => navigate("/")}>Sair</span>
             </div>
           </UserContainer>
         )}

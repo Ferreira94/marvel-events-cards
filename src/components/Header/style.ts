@@ -21,10 +21,12 @@ export const UserContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: ${(props) => props.theme["gray-100"]};
 
   div {
     display: flex;
     align-items: center;
+    gap: 0.25rem;
     cursor: pointer;
 
     &:hover {

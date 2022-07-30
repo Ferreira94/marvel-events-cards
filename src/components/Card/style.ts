@@ -8,23 +8,24 @@ export const CardContainer = styled.div`
   gap: 0.5rem;
   padding: 0.125rem;
   background-color: ${(props) => props.theme["gray-100"]};
+  color: ${(props) => props.theme["gray-800"]};
   border-radius: 0.5rem;
   padding: 1.25rem;
   box-shadow: 0 0 0.5rem ${(props) => props.theme["gray-700"]};
-  color: black;
   overflow: hidden;
 
   div {
     display: flex;
     align-items: center;
+    height: 2rem;
 
     span {
       text-align: center;
-      padding-top: 0.25rem;
       width: 1.5rem;
       height: 1.5rem;
       font-weight: bold;
       background-color: ${(props) => props.theme["red-500"]};
+      color: ${(props) => props.theme["gray-100"]};
       border-radius: 1rem;
     }
 
@@ -36,7 +37,15 @@ export const CardContainer = styled.div`
 
   p {
     height: 12.5rem;
-    overflow: hidden;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+      /* background: ${(props) => props.theme["gray-500"]}; */
+    }
+    &::-webkit-scrollbar-thumb {
+      background: ${(props) => props.theme["yellow-500"]};
+    }
   }
 
   button {
