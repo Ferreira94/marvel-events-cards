@@ -25,9 +25,10 @@ export interface IResultProps {
 
 export function Cards() {
   const [events, setEvents] = useState<IResultProps[]>([]);
+  const [list, setList] = useState<number[]>([]);
   const [randomNumbers, setRandomNumbers] = useState<number[]>([]);
+  const [countCards, setCountCards] = useState(5);
   const [selectedEvents, setSelectedEvents] = useState<IResultProps[]>([]);
-  const [countCards, setCountCards] = useState(0);
   const isLoading = events.length === 0 ? true : false;
   const { state } = useLocation() as unknown as IUserProps;
   const navigate = useNavigate();
@@ -57,36 +58,37 @@ export function Cards() {
         randomNumbers[i],
       ];
     }
-
     setSelectedEvents([]);
     randomNumbers.map((item) =>
       setSelectedEvents((state) => [...state, events[item]])
     );
   }
 
-  function randomNumber() {
-    setRandomNumbers([...randomNumbers, Math.floor(Math.random() * 74)]);
+  useEffect(() => {
+    const random = [];
 
-    if (countCards >= 5) {
-      const random = Math.floor(Math.random() * 74);
-
-      setSelectedEvents((state) => [...state, events[random]]);
+    for (let i = 0; i < 74; i++) {
+      random[i] = i + 1;
     }
 
-    setCountCards(countCards + 1);
-  }
+    let randomNumber;
+    let tmp;
+    for (let i = random.length; i; ) {
+      randomNumber = (Math.random() * i--) | 0;
+      tmp = random[randomNumber];
+      random[randomNumber] = random[i];
+      random[i] = tmp;
+    }
+
+    setList(random);
+  }, [isLoading]);
 
   useEffect(() => {
-    if (countCards < 5) {
-      randomNumber();
-
-      return;
-    }
-
-    if (!isLoading && countCards <= 5) {
-      randomNumbers.map((item) =>
-        setSelectedEvents((state) => [...state, events[item]])
-      );
+    if (!isLoading && list.length > 0) {
+      for (let i = randomNumbers.length; i < countCards; i++) {
+        setRandomNumbers((state) => [...state, list[i]]);
+        setSelectedEvents((state) => [...state, events[list[i]]]);
+      }
     }
 
     return;
@@ -99,8 +101,12 @@ export function Cards() {
         {!isLoading && (
           <ButtonsContainer>
             <button
-              onClick={countCards < 8 ? randomNumber : () => {}}
-              disabled={countCards === 8 ? true : false}
+              onClick={
+                randomNumbers.length < 8
+                  ? () => setCountCards(countCards + 1)
+                  : () => {}
+              }
+              disabled={randomNumbers.length === 8 ? true : false}
             >
               Puxar carta
             </button>
